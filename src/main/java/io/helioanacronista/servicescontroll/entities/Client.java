@@ -1,5 +1,6 @@
 package io.helioanacronista.servicescontroll.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,6 @@ public class Client {
     private String address;
 
     @OneToMany(mappedBy = "clients")
-    private List<Service> services = new ArrayList<>();
+    @JsonIgnore
+    private List<Work> services = new ArrayList<>();
 }

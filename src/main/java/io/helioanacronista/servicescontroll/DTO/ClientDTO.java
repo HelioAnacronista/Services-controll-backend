@@ -1,15 +1,11 @@
 package io.helioanacronista.servicescontroll.DTO;
 
 import io.helioanacronista.servicescontroll.entities.Client;
-import io.helioanacronista.servicescontroll.entities.Service;
+import io.helioanacronista.servicescontroll.entities.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,15 +20,15 @@ public class ClientDTO {
     private String phone;
     private String address;
 
-    private List<ServiceDTO> services = new ArrayList<>();
+    private List<WorkDTO> services = new ArrayList<>();
 
     public ClientDTO(Client entity) {
         id = entity.getId();
         name = entity.getName();
         phone = entity.getPhone();
         address = entity.getAddress();
-        for (Service rol : entity.getServices()) {
-            services.add(new ServiceDTO(rol));
+        for (Work works : entity.getServices()) {
+            services.add(new WorkDTO(works));
         }
 
     }
