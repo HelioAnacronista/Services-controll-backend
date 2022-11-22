@@ -1,4 +1,4 @@
-package io.helioanacronista.servicescontroll.DTO;
+package io.helioanacronista.servicescontroll.DTO.WorksDTOS;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.helioanacronista.servicescontroll.entities.Work;
@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WorkDTO {
+public class WorkCreateDTO {
 
 
     private Long id;
@@ -32,10 +32,7 @@ public class WorkDTO {
 
     private Double valor;
 
-    @JsonIgnore
-    private List<Work> servicesList = new ArrayList<>();
-
-    public WorkDTO(Work entity) {
+    public WorkCreateDTO(Work entity) {
         id = entity.getId();
         titulo = entity.getTitulo();
         descricao = entity.getDescricao();
@@ -45,7 +42,7 @@ public class WorkDTO {
         categorysId = entity.getCategorys().getId();
         clientsId = entity.getClients().getId();
 
-        nomeCategoria = entity.getCategorys().getNome();
+        nomeCategoria = entity.getCategorys().getName();
         nomeCliente = entity.getClients().getName();
 
         valor = entity.getValor();

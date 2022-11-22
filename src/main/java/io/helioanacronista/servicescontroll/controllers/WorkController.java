@@ -1,7 +1,8 @@
 package io.helioanacronista.servicescontroll.controllers;
 
-import io.helioanacronista.servicescontroll.DTO.WorkDTO;
-import io.helioanacronista.servicescontroll.DTO.WorkMinDTO;
+import io.helioanacronista.servicescontroll.DTO.WorksDTOS.WorkCreateDTO;
+import io.helioanacronista.servicescontroll.DTO.WorksDTOS.WorkDTO;
+import io.helioanacronista.servicescontroll.DTO.WorksDTOS.WorkMinDTO;
 import io.helioanacronista.servicescontroll.entities.Work;
 import io.helioanacronista.servicescontroll.services.WorkServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,5 +46,17 @@ public class WorkController {
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<WorkCreateDTO> update(@PathVariable Long id, @RequestBody WorkCreateDTO dto){
+        dto = service.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id){
+        service.delete(id);
+        return ResponseEntity.noContent().build();
     }
 }

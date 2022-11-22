@@ -1,4 +1,4 @@
-package io.helioanacronista.servicescontroll.DTO;
+package io.helioanacronista.servicescontroll.DTO.WorksDTOS;
 
 import io.helioanacronista.servicescontroll.entities.Work;
 import lombok.AllArgsConstructor;
