@@ -1,5 +1,6 @@
-package io.helioanacronista.servicescontroll.DTO;
+package io.helioanacronista.servicescontroll.DTO.clientsDTOS;
 
+import io.helioanacronista.servicescontroll.DTO.WorksDTOS.WorkDTO;
 import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.entities.Work;
 import lombok.AllArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientMinDTO {
+public class ClientDTO {
 
     private Long id;
 
@@ -28,7 +29,7 @@ public class ClientMinDTO {
 
     private List<WorkDTO> services = new ArrayList<>();
 
-    public ClientMinDTO(Client entity) {
+    public ClientDTO(Client entity) {
         id = entity.getId();
         name = entity.getName();
         phone = entity.getPhone();
@@ -37,15 +38,5 @@ public class ClientMinDTO {
             services.add(new WorkDTO(works));
         }
 
-    }
-
-    public Double getTotal() {
-        Double sum = 0.0;
-
-        for (WorkDTO works : services) {
-            sum += works.getValor();
-        }
-
-        return sum;
     }
 }

@@ -1,8 +1,8 @@
 package io.helioanacronista.servicescontroll.controllers;
 
-import io.helioanacronista.servicescontroll.DTO.ClientDTO;
-import io.helioanacronista.servicescontroll.DTO.ClientMinDTO;
-import io.helioanacronista.servicescontroll.DTO.ClientWithoutWorksDTO;
+import io.helioanacronista.servicescontroll.DTO.clientsDTOS.ClientDTO;
+import io.helioanacronista.servicescontroll.DTO.clientsDTOS.ClientMinDTO;
+import io.helioanacronista.servicescontroll.DTO.clientsDTOS.ClientWithoutWorksDTO;
 import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;

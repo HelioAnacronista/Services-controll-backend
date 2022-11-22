@@ -1,7 +1,7 @@
 package io.helioanacronista.servicescontroll.services;
 
-import io.helioanacronista.servicescontroll.DTO.ClientDTO;
-import io.helioanacronista.servicescontroll.DTO.ClientWithoutWorksDTO;
+import io.helioanacronista.servicescontroll.DTO.clientsDTOS.ClientDTO;
+import io.helioanacronista.servicescontroll.DTO.clientsDTOS.ClientWithoutWorksDTO;
 import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.repositories.ClientRepository;
 import io.helioanacronista.servicescontroll.services.exceptions.DataBaseNotFoundException;
@@ -45,8 +45,8 @@ public class ClientServices {
             dto.setId(null);
         }
 
-        //validar
-        validarClient(dto);
+        //valid
+        validClient(dto);
 
         copyDTOToEntityUpdate(dto, entity);
         repository.save(entity);
@@ -55,9 +55,6 @@ public class ClientServices {
 
     public ClientWithoutWorksDTO update(@PathVariable Long id, ClientWithoutWorksDTO dto){
         try {
-            if (dto.getId() == null) {
-                throw new ResourceNotFoundException("Recuso não encontrado");
-            }
             Client entity = repository.getReferenceById(id);
             copyDTOToEntityUpdateWithoutWorks(dto, entity);
             entity = repository.save(entity);
@@ -77,7 +74,7 @@ public class ClientServices {
         }
     }
 
-    //Copy entity to dto
+    //Copy entity to dto ClientDTO
     private void copyDTOToEntityUpdate (ClientDTO dto, Client entity) {
         entity.setId(dto.getId());
         entity.setName(dto.getName());
@@ -85,7 +82,7 @@ public class ClientServices {
         entity.setPhone(dto.getPhone());
     }
 
-    //Copy entity to dto
+    //Copy entity to dto ClientWithoutWorksDTO
     private void copyDTOToEntityUpdateWithoutWorks (ClientWithoutWorksDTO dto, Client entity) {
         entity.setId(dto.getId());
         entity.setName(dto.getName());
@@ -94,7 +91,7 @@ public class ClientServices {
     }
 
     //Valid Client
-    public void validarClient(ClientDTO dto) {
+    public void validClient(ClientDTO dto) {
         Optional<Client> entity = repository.findByPhone(dto.getPhone());
         //String phone = entity.get().getPhone();
         if (entity.isPresent() && entity.get().getId() != dto.getId()) {
