@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDTO {
+public class ClientMinDTO {
 
     private Long id;
 
@@ -28,7 +28,7 @@ public class ClientDTO {
 
     private List<WorkDTO> services = new ArrayList<>();
 
-    public ClientDTO(Client entity) {
+    public ClientMinDTO(Client entity) {
         id = entity.getId();
         name = entity.getName();
         phone = entity.getPhone();
@@ -37,5 +37,15 @@ public class ClientDTO {
             services.add(new WorkDTO(works));
         }
 
+    }
+
+    public Double getTotal() {
+        Double sum = 0.0;
+
+        for (WorkDTO works : services) {
+            sum += works.getValor();
+        }
+
+        return sum;
     }
 }

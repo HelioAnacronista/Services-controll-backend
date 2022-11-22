@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClientDTO {
+public class ClientWithoutWorksDTO {
 
     private Long id;
 
@@ -26,16 +26,10 @@ public class ClientDTO {
     @NotBlank(message = "Campo requerido")
     private String address;
 
-    private List<WorkDTO> services = new ArrayList<>();
-
-    public ClientDTO(Client entity) {
+    public ClientWithoutWorksDTO(Client entity) {
         id = entity.getId();
         name = entity.getName();
         phone = entity.getPhone();
         address = entity.getAddress();
-        for (Work works : entity.getServices()) {
-            services.add(new WorkDTO(works));
-        }
-
     }
 }
