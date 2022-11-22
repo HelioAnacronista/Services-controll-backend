@@ -20,8 +20,8 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String nome;
-    private String descricao;
+    private String name;
+    private String description;
 
     @OneToMany(mappedBy = "categorys")
     @JsonIgnore
