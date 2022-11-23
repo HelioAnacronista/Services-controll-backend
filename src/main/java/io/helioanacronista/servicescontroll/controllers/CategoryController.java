@@ -11,6 +11,7 @@ import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.services.CategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -53,6 +54,7 @@ public class CategoryController {
         return ResponseEntity.ok(list);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<CategoryDTO> create (@Valid @RequestBody CategoryDTO dto) {
         dto = service.insert(dto);
@@ -61,12 +63,14 @@ public class CategoryController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<CategoryWithoutWorksDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryWithoutWorksDTO dto) {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
         service.delete(id);

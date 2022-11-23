@@ -7,6 +7,7 @@ import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -50,6 +51,7 @@ public class ClientController {
         return ResponseEntity.ok(list);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<ClientDTO> create (@Valid @RequestBody ClientDTO dto) {
         dto = service.insert(dto);
@@ -58,12 +60,14 @@ public class ClientController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<ClientWithoutWorksDTO> update(@PathVariable Long id, @Valid @RequestBody ClientWithoutWorksDTO dto) throws Exception {
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
         service.delete(id);

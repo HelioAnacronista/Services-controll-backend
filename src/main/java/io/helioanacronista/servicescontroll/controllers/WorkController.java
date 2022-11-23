@@ -7,6 +7,7 @@ import io.helioanacronista.servicescontroll.entities.Work;
 import io.helioanacronista.servicescontroll.services.WorkServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -40,6 +41,7 @@ public class WorkController {
         return ResponseEntity.ok().body(entity);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
     public ResponseEntity<WorkDTO> create (@RequestBody WorkDTO dto) {
         dto = service.insert(dto);
@@ -48,12 +50,14 @@ public class WorkController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<WorkCreateDTO> update(@PathVariable Long id, @RequestBody WorkCreateDTO dto){
         dto = service.update(id, dto);
         return ResponseEntity.ok(dto);
     }
 
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id){
         service.delete(id);
