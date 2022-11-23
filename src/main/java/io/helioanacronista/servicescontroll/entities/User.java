@@ -1,5 +1,6 @@
 package io.helioanacronista.servicescontroll.entities;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,17 +20,19 @@ import java.util.*;
 @Setter
 public class User implements UserDetails {
 
+    @ApiModelProperty(value = "ID de usuario")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @ApiModelProperty(value = "nome de usuario")
     private String name;
-
+    @ApiModelProperty(value = "email de usuario / login ")
     @Column(unique = true)
     private String email;
-
+    @ApiModelProperty(value = "senha de usuario")
     private String password;
 
+    @ApiModelProperty(value = "Lista de cargos")
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "tb_user_role",
             joinColumns = @JoinColumn(name = "user_id"),
