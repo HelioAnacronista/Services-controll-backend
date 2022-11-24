@@ -50,6 +50,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- DB  postgresql-->
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
+
 		<!-- Lombok -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>

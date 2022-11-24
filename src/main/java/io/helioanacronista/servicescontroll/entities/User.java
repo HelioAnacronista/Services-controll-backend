@@ -9,15 +9,18 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-@Entity
-@Table(name = "tb_user")
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+
+@Entity
+@Table(name = "tb_user")
 public class User implements UserDetails {
 
     @ApiModelProperty(value = "ID de usuario")

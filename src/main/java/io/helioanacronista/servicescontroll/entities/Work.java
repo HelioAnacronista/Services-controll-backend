@@ -19,7 +19,7 @@ public class Work {
 
     @ApiModelProperty(value = "ID de serviços")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ApiModelProperty(value = "titulo de serviços")
     private String titulo;

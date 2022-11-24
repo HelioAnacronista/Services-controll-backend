@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "tb_role")
 public class Role implements GrantedAuthority {
+
     @ApiModelProperty(value = "ID de cargos ")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
