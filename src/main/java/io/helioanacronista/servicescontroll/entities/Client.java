@@ -1,14 +1,11 @@
 package io.helioanacronista.servicescontroll.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -30,8 +27,4 @@ public class Client {
     @ApiModelProperty(value = "Endereço do cliente")
     private String address;
 
-    @ApiModelProperty(value = "Lista de serviços do cliente")
-    @OneToMany(mappedBy = "clients")
-    @JsonIgnore
-    private List<Work> services = new ArrayList<>();
 }

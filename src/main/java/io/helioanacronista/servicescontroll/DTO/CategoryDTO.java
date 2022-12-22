@@ -1,4 +1,4 @@
-package io.helioanacronista.servicescontroll.DTO.categoriesDTOS;
+package io.helioanacronista.servicescontroll.DTO;
 
 import io.helioanacronista.servicescontroll.entities.Category;
 import lombok.AllArgsConstructor;
@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CategoryWithoutWorksDTO {
+public class CategoryDTO {
 
     private Long id;
     @Size(min = 3, max = 80, message = "O nome precisa ter entre 3 a 8 caracteres")
@@ -20,11 +20,11 @@ public class CategoryWithoutWorksDTO {
     @NotBlank(message = "Campo requerido")
     private String description;
 
-    public CategoryWithoutWorksDTO(Category entity) {
+
+
+    public CategoryDTO(Category entity) {
         id = entity.getId();
         name = entity.getName();
         description = entity.getDescription();
     }
-
 }
-

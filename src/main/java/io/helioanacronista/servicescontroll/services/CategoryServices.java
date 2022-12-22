@@ -1,7 +1,6 @@
 package io.helioanacronista.servicescontroll.services;
 
-import io.helioanacronista.servicescontroll.DTO.categoriesDTOS.CategoryDTO;
-import io.helioanacronista.servicescontroll.DTO.categoriesDTOS.CategoryWithoutWorksDTO;
+import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.repositories.CategoryRepository;
 import io.helioanacronista.servicescontroll.services.exceptions.DataBaseNotFoundException;
@@ -10,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,11 +29,6 @@ public class CategoryServices {
         return categoryList;
     }
 
-    public List<CategoryWithoutWorksDTO> findAllCategoryFull() {
-        List<Category> result = repository.findAll();
-
-        return result.stream().map(x -> new CategoryWithoutWorksDTO(x)).toList();
-    }
 
     public CategoryDTO insert( CategoryDTO dto) {
         Category entity = new Category();
@@ -52,16 +44,6 @@ public class CategoryServices {
         return new CategoryDTO(entity);
     }
 
-    public CategoryWithoutWorksDTO update(@PathVariable Long id, CategoryWithoutWorksDTO dto){
-        try {
-            Category entity = repository.getReferenceById(id);
-            copyDTOToEntityUpdateWithoutWorks(dto, entity);
-            entity = repository.save(entity);
-            return new CategoryWithoutWorksDTO(entity);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Recuso não encontrado");
-        }
-    }
 
     public void delete(Long id){
         try {
@@ -80,12 +62,6 @@ public class CategoryServices {
         entity.setDescription(dto.getDescription());
     }
 
-    //Copy entity to dto CategoryWithoutWorksDTO
-    private void copyDTOToEntityUpdateWithoutWorks (CategoryWithoutWorksDTO dto, Category entity) {
-        entity.setId(dto.getId());
-        entity.setName(dto.getName());
-        entity.setDescription(dto.getDescription());
-    }
 
     //Valid category
     public void validCategory(CategoryDTO dto) {

@@ -1,14 +1,14 @@
 package io.helioanacronista.servicescontroll.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Data
 @AllArgsConstructor
@@ -19,7 +19,7 @@ public class Category {
 
     @ApiModelProperty(value = "ID da categoria")
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ApiModelProperty(value = "Nome/titulo da categoria")
@@ -28,8 +28,4 @@ public class Category {
     @ApiModelProperty(value = "Descriçao da categoria")
     private String description;
 
-    @OneToMany(mappedBy = "categorys")
-    @JsonIgnore
-    @ApiModelProperty(value = "Lista de servicos por categoria")
-    private List<Work> services = new ArrayList<>();
 }
