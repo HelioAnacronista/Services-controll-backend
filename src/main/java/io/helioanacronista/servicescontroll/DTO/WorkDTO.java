@@ -18,18 +18,20 @@ public class WorkDTO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nomeServico;
+    private String nome;
+    private Integer status;
 
     private CategoryDTO category;
     private ClientDTO client;
-    private AccountingDTO accounting;
+
     private Double valor;
 
     public WorkDTO(Work entity) {
         id = entity.getId();
-        nomeServico = entity.getNomeServico();
+        nome = entity.getNome();
+        status = entity.getStatus();
         category = new CategoryDTO(entity.getCategory());
         client = new ClientDTO(entity.getClient());
-        accounting = new AccountingDTO(entity.getAccounting());
+        valor = entity.getValor();
     }
 }

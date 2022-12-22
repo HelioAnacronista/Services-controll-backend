@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServices {
@@ -24,9 +25,9 @@ public class CategoryServices {
         return entity;
     }
 
-    public List<Category> findAll() {
-        List<Category> categoryList = repository.findAll();
-        return categoryList;
+    public List<CategoryDTO> findAll() {
+        List<Category> expenseList = repository.findAll();
+        return expenseList.stream().map(CategoryDTO::new).collect(Collectors.toList());
     }
 
 

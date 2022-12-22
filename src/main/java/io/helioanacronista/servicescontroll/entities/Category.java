@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 
-@Entity(name = "tb_categories")
+@Entity(name = "tb_category")
 public class Category {
 
     @ApiModelProperty(value = "ID da categoria")

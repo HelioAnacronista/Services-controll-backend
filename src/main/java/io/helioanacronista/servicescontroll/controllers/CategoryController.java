@@ -1,6 +1,7 @@
 package io.helioanacronista.servicescontroll.controllers;
 
 import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
+import io.helioanacronista.servicescontroll.DTO.ExpenseDTO;
 import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.services.CategoryServices;
 import io.swagger.annotations.ApiOperation;
@@ -17,7 +18,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/api/category")
+@RequestMapping(value = "/category")
 public class CategoryController {
 
     @Autowired
@@ -36,6 +37,11 @@ public class CategoryController {
         return ResponseEntity.ok().body(entity);
     }
 
+    @GetMapping
+    public ResponseEntity<List<CategoryDTO>> findAll() {
+        List<CategoryDTO> listDtos = service.findAll();
+        return ResponseEntity.ok(listDtos);
+    }
 
     @ApiOperation(value = "Cria uma categorias COM uma lista vazia de serviços")
     @ApiResponses(value = {
