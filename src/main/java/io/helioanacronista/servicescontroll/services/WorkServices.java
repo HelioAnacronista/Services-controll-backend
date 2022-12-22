@@ -21,8 +21,7 @@ public class WorkServices {
     private ClientRepository clientRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-    @Autowired
-    private AccountingRepository accountingRepository;
+
 
 
     //findID
@@ -40,12 +39,10 @@ public class WorkServices {
         //Encontrar o client e categoria pelo o ids
         Client client = clientRepository.findById(dto.getClient().getId()).orElseThrow( () -> new UsernameNotFoundException("CLIENT NOT FOUND" + dto.getClient().getId()));
         Category category = categoryRepository.findById(dto.getCategory().getId()).orElseThrow(() -> new UsernameNotFoundException("CATEGORIA NOT FOUD"+ dto.getCategory().getId()));
-        Accounting accounting = accountingRepository.findById(dto.getAccounting().getId()).orElseThrow(() -> new UsernameNotFoundException("CATEGORIA NOT FOUD"+ dto.getAccounting().getId()));
-
 
         entity.setCategory(category);
         entity.setClient(client);
-        entity.setAccounting(accounting);
+
 
         entity.setValor(dto.getValor());
         workRepository.save(entity);
