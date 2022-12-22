@@ -16,8 +16,8 @@ public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String nome;
-    private Integer status;
+    private String name;
+    private Status status;
 
     @ManyToOne
     @JoinColumn(name = "id_category")
@@ -28,5 +28,4 @@ public class Work {
     private Client client;
 
     private Double valor;
-
 }
