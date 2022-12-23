@@ -1,9 +1,14 @@
 package io.helioanacronista.servicescontroll.controllers;
 
+import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.DTO.ClientDTO;
 import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,10 +32,18 @@ public class ClientController {
         return ResponseEntity.ok().body(dto);
     }
 
-    @GetMapping
-    public ResponseEntity<List<ClientDTO>> findAll() {
-    List<ClientDTO> dtoList = service.findAll();
-    return ResponseEntity.ok(dtoList);
+    @GetMapping()
+    public Page<ClientDTO> getAll(
+            //parametros da requição
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sort", defaultValue = "name") String sort,
+            @RequestParam(name = "direction", defaultValue = "asc") String direction,
+            @RequestParam(name = "name", required = false) String name
+    ) {
+        //Monta a requisição
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sort));
+        return service.findByNameContainingIgnoreCase(name, pageable);
     }
 
 

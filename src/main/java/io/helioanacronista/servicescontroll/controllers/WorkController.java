@@ -40,6 +40,12 @@ public class WorkController {
         return ResponseEntity.ok(listDtos);
     }
 
+    @GetMapping(value = "/min")
+    public ResponseEntity<Page<WorkMinDTO>> findMinAll (@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
+        Page<WorkMinDTO> listDtos = workServices.findMinAll(name, pageable);
+        return ResponseEntity.ok(listDtos);
+    }
+
     @PostMapping(produces ="application/json", consumes="application/json")
     public ResponseEntity<WorkDTO> create (@RequestBody WorkDTO dto) {
         WorkDTO en = workServices.insert(dto);

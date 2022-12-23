@@ -57,6 +57,13 @@ public class WorkServices {
         return workList;
     }
 
+    //getAllMin
+    @Transactional(readOnly = true)
+    public Page<WorkMinDTO> findMinAll(String name, Pageable pageable) {
+        Page<Work> workList = workRepository.searchByName(name, pageable);
+        return workList.map(x -> new WorkMinDTO(x));
+    }
+
 
     //CREATE
     @Transactional

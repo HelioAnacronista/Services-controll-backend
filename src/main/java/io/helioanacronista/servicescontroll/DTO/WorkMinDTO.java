@@ -16,12 +16,12 @@ public class WorkMinDTO {
     private Long id;
     private String name;
     private Double valor;
-    private Status status;
+    private String status;
 
     public WorkMinDTO(Work entity) {
         id = entity.getId();
         name = entity.getName();
-        status = Status.toEnum(entity.getStatus().getCodigo());
+        status = String.valueOf(entity.getStatus());
         valor = entity.getValor();
     }
 }

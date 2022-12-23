@@ -8,11 +8,13 @@ import io.helioanacronista.servicescontroll.services.exceptions.ResourceNotFound
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class CategoryServices {
@@ -25,11 +27,11 @@ public class CategoryServices {
         return entity;
     }
 
-    public List<CategoryDTO> findAll() {
-        List<Category> expenseList = repository.findAll();
-        return expenseList.stream().map(CategoryDTO::new).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public Page<CategoryDTO> findByNameContainingIgnoreCase(String name, Pageable pageable) {
+        Page<Category> result = repository.findByNameContainingIgnoreCase(name, pageable);
+        return result.map(x -> new CategoryDTO(x));
     }
-
 
     public CategoryDTO insert( CategoryDTO dto) {
         Category entity = new Category();

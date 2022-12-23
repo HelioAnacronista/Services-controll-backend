@@ -1,7 +1,9 @@
 package io.helioanacronista.servicescontroll.services;
 
+import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.DTO.ClientDTO;
 import io.helioanacronista.servicescontroll.DTO.ExpenseDTO;
+import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.entities.Expense;
 import io.helioanacronista.servicescontroll.entities.Work;
@@ -12,7 +14,10 @@ import io.helioanacronista.servicescontroll.services.exceptions.ResourceNotFound
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.persistence.EntityNotFoundException;
@@ -35,9 +40,10 @@ public class ClientServices {
         return new ClientDTO(entity);
     }
 
-    public List<ClientDTO> findAll() {
-        List<Client> expenseList = repository.findAll();
-        return expenseList.stream().map(ClientDTO::new).collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public Page<ClientDTO> findByNameContainingIgnoreCase(String name, Pageable pageable) {
+        Page<Client> result = repository.findByNameContainingIgnoreCase(name, pageable);
+        return result.map(x -> new ClientDTO(x));
     }
 
     public ClientDTO insert( ClientDTO dto) {
