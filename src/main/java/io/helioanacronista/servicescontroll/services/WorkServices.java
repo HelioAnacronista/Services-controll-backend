@@ -3,6 +3,7 @@ package io.helioanacronista.servicescontroll.services;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Tuple;
 
+import io.helioanacronista.servicescontroll.DTO.WorkCardDTO;
 import io.helioanacronista.servicescontroll.DTO.WorkDTO;
 import io.helioanacronista.servicescontroll.DTO.WorkMinDTO;
 import io.helioanacronista.servicescontroll.entities.Category;
@@ -11,6 +12,7 @@ import io.helioanacronista.servicescontroll.entities.Status;
 import io.helioanacronista.servicescontroll.entities.Work;
 import io.helioanacronista.servicescontroll.repositories.CategoryRepository;
 import io.helioanacronista.servicescontroll.repositories.ClientRepository;
+import io.helioanacronista.servicescontroll.repositories.ExpenseRepository;
 import io.helioanacronista.servicescontroll.repositories.WorkRepository;
 import io.helioanacronista.servicescontroll.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 
@@ -35,10 +38,27 @@ public class WorkServices {
     private ClientRepository clientRepository;
     @Autowired
     private CategoryRepository categoryRepository;
+    @Autowired
+    private ExpenseRepository expenseRepository;
 
-    //return value-total dos servicos
-    public Double getTotalValue() {
-        return workRepository.getTotalValue();
+    //return value-total e porcetagem dos servicos
+    public WorkCardDTO getTotalValue() {
+        //Puxa valores do banco de dados
+        Double gastos = expenseRepository.getTotalValue();
+        Double vendas = workRepository.getTotalValue();
+
+        /*
+        Se você quiser calcular a porcentagem de lucro,
+        pode subtrair o valor total de gastos do valor total de vendas e dividir o resultado pelo valor total de vendas.
+        A fórmula para calcular a porcentagem de lucro seria:
+         */
+        Double resultPorcentagem = ((vendas - gastos) / vendas) * 100;
+
+        WorkCardDTO dto = new WorkCardDTO();
+        dto.setValue(vendas);
+        dto.setPercentage(resultPorcentagem);
+
+        return dto;
     }
 
     //findID
@@ -62,6 +82,14 @@ public class WorkServices {
     public Page<WorkMinDTO> findMinAll(String name, Pageable pageable) {
         Page<Work> workList = workRepository.searchByName(name, pageable);
         return workList.map(x -> new WorkMinDTO(x));
+    }
+
+
+    //GetLast
+    @Transactional(readOnly = true)
+    public List<WorkDTO> findLastBy() {
+        List<Work> result = workRepository.findTop8ByOrderByIdDesc();
+        return result.stream().map(work -> new WorkDTO(work)).collect(Collectors.toList());
     }
 
 

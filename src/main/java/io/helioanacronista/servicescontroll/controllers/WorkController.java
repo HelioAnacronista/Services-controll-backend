@@ -1,6 +1,7 @@
 package io.helioanacronista.servicescontroll.controllers;
 
 
+import io.helioanacronista.servicescontroll.DTO.WorkCardDTO;
 import io.helioanacronista.servicescontroll.DTO.WorkDTO;
 import io.helioanacronista.servicescontroll.DTO.WorkMinDTO;
 import io.helioanacronista.servicescontroll.entities.Work;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/work")
@@ -22,8 +24,8 @@ public class WorkController {
     private WorkServices workServices;
 
     @GetMapping("/totalvalue")
-    public ResponseEntity<Double> getTotalValue() {
-        Double totalValue = workServices.getTotalValue();
+    public ResponseEntity<WorkCardDTO> getTotalValue() {
+        WorkCardDTO totalValue = workServices.getTotalValue();
         return ResponseEntity.ok().body(totalValue);
     }
 
@@ -43,6 +45,12 @@ public class WorkController {
     @GetMapping(value = "/min")
     public ResponseEntity<Page<WorkMinDTO>> findMinAll (@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
         Page<WorkMinDTO> listDtos = workServices.findMinAll(name, pageable);
+        return ResponseEntity.ok(listDtos);
+    }
+
+    @GetMapping(value = "/lasts")
+    public ResponseEntity<List<WorkDTO>> findMinAll () {
+        List<WorkDTO> listDtos = workServices.findLastBy();
         return ResponseEntity.ok(listDtos);
     }
 

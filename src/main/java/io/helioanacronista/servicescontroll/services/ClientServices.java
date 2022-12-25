@@ -52,7 +52,7 @@ public class ClientServices {
             dto.setId(null);
         }
         //valid
-        validTest(dto);
+//        validTest(dto);
 
         convertToEntity(dto, entity);
         repository.save(entity);

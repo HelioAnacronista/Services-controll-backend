@@ -1,8 +1,10 @@
 package io.helioanacronista.servicescontroll.services;
 
+import io.helioanacronista.servicescontroll.DTO.ExpenseCardDTO;
 import io.helioanacronista.servicescontroll.DTO.ExpenseDTO;
 import io.helioanacronista.servicescontroll.entities.Expense;
 import io.helioanacronista.servicescontroll.repositories.ExpenseRepository;
+import io.helioanacronista.servicescontroll.repositories.WorkRepository;
 import io.helioanacronista.servicescontroll.services.exceptions.DataBaseNotFoundException;
 import io.helioanacronista.servicescontroll.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,26 @@ public class ExpenseServices {
     @Autowired
     private ExpenseRepository repository;
 
+    @Autowired
+    private WorkRepository workRepository;
+
+    //return value-total dos gastos
+    public ExpenseCardDTO getTotalValue() {
+        ExpenseCardDTO dto = new ExpenseCardDTO();
+
+        Double gasto = repository.getTotalValue();
+        Double vendas = workRepository.getTotalValue();
+
+        Double total = vendas - gasto;
+
+        //Essa fórmula é útil se você quiser saber qual é a porcentagem do valor total de vendas que está sendo gasto.
+        Double resultPorcentagem = (gasto / vendas) * 100;
+
+        dto.setValue(gasto);
+        dto.setPercentage(resultPorcentagem);
+        return dto;
+    }
+
     public ExpenseDTO findById(Long id) {
         Expense entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado! Id: " + id));
         return new ExpenseDTO(entity);
@@ -37,9 +59,6 @@ public class ExpenseServices {
         if (dto.getId() != null) {
             dto.setId(null);
         }
-
-        //valid
-        validTest(dto);
 
         convertToEntity(dto, entity);
         repository.save(entity);

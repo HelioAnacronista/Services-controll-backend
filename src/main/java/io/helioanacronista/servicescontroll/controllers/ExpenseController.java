@@ -1,6 +1,8 @@
 package io.helioanacronista.servicescontroll.controllers;
 
+import io.helioanacronista.servicescontroll.DTO.ExpenseCardDTO;
 import io.helioanacronista.servicescontroll.DTO.ExpenseDTO;
+import io.helioanacronista.servicescontroll.DTO.WorkCardDTO;
 import io.helioanacronista.servicescontroll.services.ExpenseServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,12 @@ public class ExpenseController {
 
     @Autowired
     private ExpenseServices service;
+
+    @GetMapping("/totalvalue")
+    public ResponseEntity<ExpenseCardDTO> getTotalValue() {
+        ExpenseCardDTO totalValue = service.getTotalValue();
+        return ResponseEntity.ok().body(totalValue);
+    }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ExpenseDTO> findById(@PathVariable Long id) {

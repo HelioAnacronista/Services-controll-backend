@@ -1,19 +1,20 @@
 package io.helioanacronista.servicescontroll.services;
 
 import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
+import io.helioanacronista.servicescontroll.DTO.ClientDTO;
 import io.helioanacronista.servicescontroll.entities.Category;
+import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.repositories.CategoryRepository;
 import io.helioanacronista.servicescontroll.services.exceptions.DataBaseNotFoundException;
 import io.helioanacronista.servicescontroll.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -40,11 +41,23 @@ public class CategoryServices {
         }
 
         //valid
-        validCategory(dto);
+//        validCategory(dto);
 
-        copyDTOToEntity(dto, entity);
+        convertToEntity(dto, entity);
         repository.save(entity);
         return new CategoryDTO(entity);
+    }
+
+    public CategoryDTO update(Long id, CategoryDTO dto) {
+        try {
+            Category entity = repository.getReferenceById(id);
+            convertToEntity(dto, entity);
+            entity = repository.save(entity);
+            return new CategoryDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
     }
 
 
@@ -59,7 +72,7 @@ public class CategoryServices {
     }
 
     //Copy entity to dto CategoryDTO
-    private void copyDTOToEntity (CategoryDTO dto, Category entity) {
+    private void convertToEntity (CategoryDTO dto, Category entity) {
         entity.setId(dto.getId());
         entity.setName(dto.getName());
         entity.setDescription(dto.getDescription());

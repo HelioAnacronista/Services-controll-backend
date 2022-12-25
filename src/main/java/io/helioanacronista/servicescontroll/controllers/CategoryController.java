@@ -23,7 +23,6 @@ public class CategoryController {
     @Autowired
     private CategoryServices service;
 
-
     @GetMapping(value = "/{id}",produces="application/json")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
         Category entity = service.findById(id);
@@ -33,8 +32,8 @@ public class CategoryController {
     @GetMapping()
     public Page<CategoryDTO> getAll(
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size,
-            @RequestParam(name = "sort", defaultValue = "name") String sort,
+            @RequestParam(name = "size", defaultValue = "50") int size,
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
             @RequestParam(name = "direction", defaultValue = "asc") String direction,
             @RequestParam(name = "name", required = false) String name
     ) {
