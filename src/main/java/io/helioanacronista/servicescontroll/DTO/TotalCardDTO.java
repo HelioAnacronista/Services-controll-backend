@@ -2,11 +2,10 @@ package io.helioanacronista.servicescontroll.DTO;
 
 import java.time.LocalDate;
 
-public class WorkCardDTO {
+public class TotalCardDTO {
 
     private Double value;
     private Double percentage;
-
 
     public Double getValue() {
         return value;
@@ -24,15 +23,18 @@ public class WorkCardDTO {
         this.percentage = percentage;
     }
 
+
+    //Montagem
     public String getIcon() {
-        return "https://drscdn.500px.org/photo/1058330716/m%3D900/v2?sig=f211a5fef5b34e0bae5ab0d8d5a10ee64e495b826ae0a73c5b02bb0d9b17286f";
+        return "https://drscdn.500px.org/photo/1058330717/m%3D900/v2?sig=a143ee3ab301aebc502b96e641bfcb0b8b5866441a08c9c98daa7931cb948b41";
     }
+
     public String getSector() {
-        return "#41f1b6";
+        return "#7380EC";
     }
 
     public String getOperation() {
-        return "Total de Vendas";
+        return "Receita Total";
     }
 
     public LocalDate getDate() {

@@ -17,7 +17,7 @@ public class Work {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private Status status;
+    private Integer status;
 
     @ManyToOne
     @JoinColumn(name = "id_category")

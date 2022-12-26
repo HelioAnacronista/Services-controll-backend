@@ -1,14 +1,29 @@
-create table tb_categories(
-	id SERIAL PRIMARY KEY,
-	name TEXT NOT NULL,
-	description CHARACTER VARYING(240) NOT NULL
+CREATE TABLE tb_category (
+    id bigserial PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    description varchar(255)
 );
 
-create table tb_clients (
-	id SERIAL PRIMARY KEY,
-	name TEXT NOT NULL,
-	phone CHARACTER VARYING(15) NOT NULL,
-	address CHARACTER VARYING(240) NOT NULL
+CREATE TABLE tb_clients (
+    id bigserial PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    phone varchar(255),
+    address varchar(255)
+);
+
+CREATE TABLE tb_expense (
+    id bigserial PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    valor double precision
+);
+
+CREATE TABLE tb_services (
+    id bigserial PRIMARY KEY,
+    name varchar(255) NOT NULL,
+    status varchar(255) NOT NULL,
+    id_category bigint REFERENCES tb_category (id),
+    id_client bigint REFERENCES tb_clients (id),
+    valor double precision
 );
 
 create table tb_role (
@@ -29,26 +44,15 @@ create table tb_user_role (
 );
 
 
-create table tb_services (
-	id SERIAL PRIMARY KEY,
-	titulo TEXT NOT NULL,
-	descricao TEXT NOT NULL,
-	data_Abertura DATE NOT NULL,
-	data_Fechamento DATE NOT NULL,
-	id_categorys INT REFERENCES tb_categories(id) NOT NULL,
-	client_id INT REFERENCES tb_clients(id) NOT NULL,
-	nomeCliente TEXT NOT NULL,
-	nomeCategoria TEXT NOT NULL,
-	valor MONEY NOT NULL
-);
+INSERT INTO tb_category (name, description) VALUES ('Categoria 1', 'Descrição da categoria 1');
+INSERT INTO tb_clients (name, phone, address) VALUES ('Cliente 1', '12345678', 'Endereço do cliente 1');
+INSERT INTO tb_expense (name, valor) VALUES ('Despesa 1', 100.50);
+INSERT INTO tb_services (name, status, id_category, id_client, valor) VALUES ('Serviço 1', 'Em andamento', 1, 1, 200.00);
 
-<<<<<<< HEAD
-INSERT INTO tb_user (name, email, password) VALUES ('Maria Brown', 'maria@gmail.com', '$2a$12$Z.XvcAVkasxCPwSGpdOK0Oo4uCAnwOLW/yz88AB5ahShz/hv6v1TS');
-INSERT INTO tb_user (name, email, password) VALUES ('Alex Green', 'alex@gmail.com', '$2a$12$Z.XvcAVkasxCPwSGpdOK0Oo4uCAnwOLW/yz88AB5ahShz/hv6v1TS');
-=======
+
 INSERT INTO tb_user ( name, email, password) VALUES ('Maria Brown', 'maria@gmail.com', '$2a$12$Z.XvcAVkasxCPwSGpdOK0Oo4uCAnwOLW/yz88AB5ahShz/hv6v1TS');
 INSERT INTO tb_user ( name, email, password) VALUES ('Alex Green', 'alex@gmail.com', '$2a$12$ruxbdPyhKlE7mCEiLH5inuTLz3hNOYFRWWJkLNKDA0gniCMIrPOgu');
->>>>>>> 81bfcf7 (add database)
+
 
 
 INSERT INTO tb_role (authority) VALUES ('ROLE_CLIENT'); -- 1
@@ -56,14 +60,4 @@ INSERT INTO tb_role (authority) VALUES ('ROLE_ADMIN'); -- 2
 
 INSERT INTO tb_user_role (user_id, role_id) VALUES (1, 1);
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 1);
-<<<<<<< HEAD
 INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
-=======
-INSERT INTO tb_user_role (user_id, role_id) VALUES (2, 2);
-
-
-select * from tb_role;
-
-select * from tb_clients;
-select * from tb_user;
->>>>>>> 81bfcf7 (add database)

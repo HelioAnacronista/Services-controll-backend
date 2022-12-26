@@ -1,6 +1,5 @@
 package io.helioanacronista.servicescontroll.DTO;
 
-import io.helioanacronista.servicescontroll.entities.Status;
 import io.helioanacronista.servicescontroll.entities.Work;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -20,9 +20,10 @@ public interface WorkRepository extends JpaRepository<Work, Long> {
     Double getTotalValue();
 
     //traz servioço paginado
-    @Query("SELECT w FROM Work w " +
-            "WHERE UPPER(w.name) LIKE UPPER(CONCAT('%', :name, '%'))")
-    Page<Work> searchByName(String name, Pageable pageable);
+
+
+    @Override
+    Page<Work> findAll(Pageable pageable);
 
     List<Work> findTop8ByOrderByIdDesc();
 }

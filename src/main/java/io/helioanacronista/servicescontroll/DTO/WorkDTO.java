@@ -1,7 +1,6 @@
 package io.helioanacronista.servicescontroll.DTO;
 
 
-import io.helioanacronista.servicescontroll.entities.Status;
 import io.helioanacronista.servicescontroll.entities.Work;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +29,7 @@ public class WorkDTO {
     public WorkDTO(Work entity) {
         id = entity.getId();
         name = entity.getName();
-        status = entity.getStatus().getCodigo();
+        status = entity.getStatus();
         category = new CategoryDTO(entity.getCategory());
         client = new ClientDTO(entity.getClient());
         valor = entity.getValor();

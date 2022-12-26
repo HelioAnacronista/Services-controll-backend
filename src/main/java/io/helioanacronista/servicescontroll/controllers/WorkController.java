@@ -8,7 +8,9 @@ import io.helioanacronista.servicescontroll.entities.Work;
 import io.helioanacronista.servicescontroll.services.WorkServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -37,14 +39,28 @@ public class WorkController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Work>> findAll (@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
-        Page<Work> listDtos = workServices.findAll(name, pageable);
+    public ResponseEntity<Page<Work>> findAll(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
+            @RequestParam(name = "direction", defaultValue = "asc") String direction
+    ) {
+        Pageable pageable = PageRequest
+                .of(page, size, Sort.by(Sort.Direction.fromString(direction), sort));
+        Page<Work> listDtos = workServices.findAll(pageable);
         return ResponseEntity.ok(listDtos);
     }
 
     @GetMapping(value = "/min")
-    public ResponseEntity<Page<WorkMinDTO>> findMinAll (@RequestParam(name = "name", defaultValue = "") String name, Pageable pageable) {
-        Page<WorkMinDTO> listDtos = workServices.findMinAll(name, pageable);
+    public ResponseEntity<Page<WorkMinDTO>> findMinAll (
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size,
+            @RequestParam(name = "sort", defaultValue = "id") String sort,
+            @RequestParam(name = "direction", defaultValue = "asc") String direction
+    ) {
+        Pageable pageable = PageRequest
+                .of(page, size, Sort.by(Sort.Direction.fromString(direction), sort));
+        Page<WorkMinDTO> listDtos = workServices.findMinAll(pageable);
         return ResponseEntity.ok(listDtos);
     }
 
@@ -69,9 +85,9 @@ public class WorkController {
 //    }
 //
 //
-//    @DeleteMapping(value = "/{id}")
-//    public ResponseEntity<Void> delete(@PathVariable Long id) {
-//        workServices.(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        workServices.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 }
