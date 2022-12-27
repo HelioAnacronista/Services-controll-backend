@@ -23,9 +23,9 @@ public class CategoryController {
     @Autowired
     private CategoryServices services;
 
-    @GetMapping(value = "/{id}",produces="application/json")
-    public ResponseEntity<Category> findById(@PathVariable Long id) {
-        Category entity = services.findById(id);
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+        CategoryDTO entity = services.findById(id);
         return ResponseEntity.ok().body(entity);
     }
 

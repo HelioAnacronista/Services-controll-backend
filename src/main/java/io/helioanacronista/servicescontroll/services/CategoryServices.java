@@ -23,9 +23,9 @@ public class CategoryServices {
     @Autowired
     private CategoryRepository repository;
 
-    public Category findById(Long id) {
+    public CategoryDTO findById(Long id) {
         Category entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado! Id: " + id));
-        return entity;
+        return new CategoryDTO(entity);
     }
 
     @Transactional(readOnly = true)
