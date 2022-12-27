@@ -15,14 +15,17 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
+    // Chave secreta usada para assinar os tokens JWT gerados pelo sistema
     @Value("${jwt.secret}")
     private String jwtSecret;
 
+    // Bean para codificar senhas em hash BCrypt
     @Bean
     BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+    // Bean para converter tokens JWT em objetos Java e vice-versa
     @Bean
     JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter tokenConverter = new JwtAccessTokenConverter();
@@ -30,11 +33,13 @@ public class WebSecurityConfig {
         return tokenConverter;
     }
 
+    // Bean para armazenar tokens JWT
     @Bean
     JwtTokenStore tokenStore() {
         return new JwtTokenStore(accessTokenConverter());
     }
 
+    // Bean para gerenciar autenticações
     @Bean
     AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
         return authenticationConfiguration.getAuthenticationManager();

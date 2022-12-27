@@ -21,6 +21,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -112,6 +113,20 @@ public class WorkServices {
         return new WorkDTO(entity);
     }
 
+    @Transactional
+    public WorkDTO update(Long id, WorkDTO dto) {
+        try {
+            Work entity = workRepository.getReferenceById(id);
+            convertToEntity(dto, entity);
+            entity = workRepository.save(entity);
+            return new WorkDTO(entity);
+        }
+        catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+    }
+
+
     public void delete(Long id){
         try {
             workRepository.deleteById(id);
@@ -125,17 +140,16 @@ public class WorkServices {
 
     //copy dto to entity
     private void convertToEntity (WorkDTO dto, Work entity) {
-        entity.setId(null);
         entity.setName(dto.getName());
         entity.setStatus(dto.getStatus());
 
         //Encontrar o client e categoria pelo o ids
-        Client client = clientRepository.findById(dto.getClient().getId()).orElseThrow( () -> new UsernameNotFoundException("CLIENT NOT FOUND" + dto.getClient().getId()));
-        Category category = categoryRepository.findById(dto.getCategory().getId()).orElseThrow(() -> new UsernameNotFoundException("CATEGORIA NOT FOUD"+ dto.getCategory().getId()));
-
+        Client client = clientRepository.findById(dto.getClient().getId())
+                .orElseThrow( () -> new UsernameNotFoundException("CLIENT NOT FOUND" + dto.getClient().getId()));
+        Category category = categoryRepository.findById(dto.getCategory().getId())
+                .orElseThrow(() -> new UsernameNotFoundException("CATEGORIA NOT FOUD"+ dto.getCategory().getId()));
         entity.setCategory(category);
         entity.setClient(client);
-
 
         entity.setValor(dto.getValor());
     }

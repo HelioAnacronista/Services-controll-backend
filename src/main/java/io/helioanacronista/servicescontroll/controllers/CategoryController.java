@@ -21,11 +21,11 @@ import java.net.URI;
 public class CategoryController {
 
     @Autowired
-    private CategoryServices service;
+    private CategoryServices services;
 
     @GetMapping(value = "/{id}",produces="application/json")
     public ResponseEntity<Category> findById(@PathVariable Long id) {
-        Category entity = service.findById(id);
+        Category entity = services.findById(id);
         return ResponseEntity.ok().body(entity);
     }
 
@@ -38,24 +38,30 @@ public class CategoryController {
             @RequestParam(name = "name", required = false) String name
     ) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), sort));
-        return service.findByNameContainingIgnoreCase(name, pageable);
+        return services.findByNameContainingIgnoreCase(name, pageable);
     }
 
 
 
     @PostMapping(consumes="application/json", produces="application/json")
     public ResponseEntity<CategoryDTO> create (@Valid @RequestBody CategoryDTO dto) {
-        dto = service.insert(dto);
+        dto = services.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dto.getId()).toUri();
 
         return ResponseEntity.created(uri).body(dto);
     }
 
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @Valid @RequestBody CategoryDTO dto) {
+        dto = services.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
+
+
     @DeleteMapping(value = "/{id}" ,produces="application/json")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
-        service.delete(id);
+        services.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

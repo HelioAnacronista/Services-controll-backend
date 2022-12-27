@@ -1,8 +1,6 @@
 package io.helioanacronista.servicescontroll.controllers;
 
-import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.DTO.ClientDTO;
-import io.helioanacronista.servicescontroll.entities.Client;
 import io.helioanacronista.servicescontroll.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +13,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
-import java.util.List;
 
 
 @RestController
@@ -55,7 +52,18 @@ public class ClientController {
         return ResponseEntity.created(uri).body(dto);
     }
 
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<ClientDTO> update(@PathVariable Long id, @Valid @RequestBody ClientDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
 
+
+    @DeleteMapping(value = "/{id}" ,produces="application/json")
+    public ResponseEntity<Void> delete(@PathVariable Long id) throws Exception {
+        service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
 
 }

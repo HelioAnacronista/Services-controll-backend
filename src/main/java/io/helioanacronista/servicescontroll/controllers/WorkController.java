@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -77,14 +78,14 @@ public class WorkController {
 
         return ResponseEntity.created(uri).body(en);
     }
-//
-//    @PutMapping(value = "/{id}")
-//    public ResponseEntity<WorkDTO> update(@PathVariable Long id, @Valid @RequestBody WorkDTO dto) {
-//        dto = workServices.update(id, dto);
-//        return ResponseEntity.ok(dto);
-//    }
-//
-//
+
+    @PutMapping(value = "/{id}")
+    public ResponseEntity<WorkDTO> update(@PathVariable Long id, @Valid @RequestBody WorkDTO dto) {
+        dto = workServices.update(id, dto);
+        return ResponseEntity.ok(dto);
+    }
+
+
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         workServices.delete(id);
