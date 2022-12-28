@@ -21,6 +21,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/work")
+@CrossOrigin(value = "*")
 public class WorkController {
 
     @Autowired

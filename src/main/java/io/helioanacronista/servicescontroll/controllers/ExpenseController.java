@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/expense")
+@CrossOrigin(value = "*")
 public class ExpenseController {
 
     @Autowired

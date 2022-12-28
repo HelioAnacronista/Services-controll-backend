@@ -20,6 +20,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/category")
+@CrossOrigin(value = "*")
 public class CategoryController {
 
     @Autowired
