@@ -1,6 +1,7 @@
 package io.helioanacronista.servicescontroll.controllers;
 
 import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
+import io.helioanacronista.servicescontroll.DTO.CategoryDTOList;
 import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.services.CategoryServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/category")
@@ -27,6 +29,12 @@ public class CategoryController {
     public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
         CategoryDTO entity = services.findById(id);
         return ResponseEntity.ok().body(entity);
+    }
+
+    @GetMapping(value = "/list")
+    public ResponseEntity<List<CategoryDTOList>> getAllList() {
+        List<CategoryDTOList> listDtos = services.getAllList();
+        return ResponseEntity.ok(listDtos);
     }
 
     @GetMapping()

@@ -1,6 +1,8 @@
 package io.helioanacronista.servicescontroll.controllers;
 
+import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.DTO.ClientDTO;
+import io.helioanacronista.servicescontroll.DTO.ClientDTOList;
 import io.helioanacronista.servicescontroll.services.ClientServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.List;
 
 
 @RestController
@@ -27,6 +30,12 @@ public class ClientController {
     public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
         ClientDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
+    }
+
+    @GetMapping(value = "list")
+    public ResponseEntity<List<ClientDTOList>> getAllList() {
+        List<ClientDTOList> listDtos = service.getAllList();
+        return ResponseEntity.ok(listDtos);
     }
 
     @GetMapping()

@@ -2,6 +2,7 @@ package io.helioanacronista.servicescontroll.services;
 
 import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.DTO.ClientDTO;
+import io.helioanacronista.servicescontroll.DTO.ClientDTOList;
 import io.helioanacronista.servicescontroll.DTO.ExpenseDTO;
 import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.entities.Client;
@@ -38,6 +39,12 @@ public class ClientServices {
     public ClientDTO findById(Long id) {
         Client entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado! Id: " + id));
         return new ClientDTO(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ClientDTOList> getAllList() {
+        List<Client> result = repository.findAll();
+        return result.stream().map(x -> new ClientDTOList(x)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)

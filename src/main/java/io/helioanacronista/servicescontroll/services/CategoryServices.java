@@ -1,6 +1,7 @@
 package io.helioanacronista.servicescontroll.services;
 
 import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
+import io.helioanacronista.servicescontroll.DTO.CategoryDTOList;
 import io.helioanacronista.servicescontroll.DTO.ClientDTO;
 import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.entities.Client;
@@ -15,7 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryServices {
@@ -23,9 +26,16 @@ public class CategoryServices {
     @Autowired
     private CategoryRepository repository;
 
+    @Transactional(readOnly = true)
     public CategoryDTO findById(Long id) {
         Category entity = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Objeto não encontrado! Id: " + id));
         return new CategoryDTO(entity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<CategoryDTOList> getAllList() {
+        List<Category> result = repository.findAll();
+        return result.stream().map(x -> new CategoryDTOList(x)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
@@ -34,6 +44,7 @@ public class CategoryServices {
         return result.map(x -> new CategoryDTO(x));
     }
 
+    @Transactional
     public CategoryDTO insert( CategoryDTO dto) {
         Category entity = new Category();
         if (dto.getId() != null) {
@@ -48,6 +59,7 @@ public class CategoryServices {
         return new CategoryDTO(entity);
     }
 
+    @Transactional
     public CategoryDTO update(Long id, CategoryDTO dto) {
         try {
             Category entity = repository.getReferenceById(id);
