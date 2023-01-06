@@ -32,7 +32,7 @@ public class WorkCardDTO {
     }
 
     public String getOperation() {
-        return "Total de Vendas";
+        return "Vendas";
     }
 
     public LocalDate getDate() {

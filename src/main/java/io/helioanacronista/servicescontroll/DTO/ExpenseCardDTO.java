@@ -31,7 +31,7 @@ public class ExpenseCardDTO {
     }
 
     public String getOperation() {
-        return "Total de Gastos";
+        return "Gastos";
     }
 
     public LocalDate getDate() {

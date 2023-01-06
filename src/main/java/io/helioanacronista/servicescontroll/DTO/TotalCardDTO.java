@@ -34,7 +34,7 @@ public class TotalCardDTO {
     }
 
     public String getOperation() {
-        return "Receita Total";
+        return "Receita";
     }
 
     public LocalDate getDate() {
