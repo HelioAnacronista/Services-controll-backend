@@ -1,7 +1,9 @@
 package io.helioanacronista.servicescontroll.services;
 
+import io.helioanacronista.servicescontroll.DTO.CategoryDTO;
 import io.helioanacronista.servicescontroll.DTO.ExpenseCardDTO;
 import io.helioanacronista.servicescontroll.DTO.ExpenseDTO;
+import io.helioanacronista.servicescontroll.entities.Category;
 import io.helioanacronista.servicescontroll.entities.Expense;
 import io.helioanacronista.servicescontroll.repositories.ExpenseRepository;
 import io.helioanacronista.servicescontroll.repositories.WorkRepository;
@@ -10,7 +12,10 @@ import io.helioanacronista.servicescontroll.services.exceptions.ResourceNotFound
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
@@ -41,6 +46,12 @@ public class ExpenseServices {
         dto.setValue(gasto);
         dto.setPercentage(resultPorcentagem);
         return dto;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ExpenseDTO> findByNameContainingIgnoreCase(String name, Pageable pageable) {
+        Page<Expense> result = repository.findByNameContainingIgnoreCase(name, pageable);
+        return result.map(x -> new ExpenseDTO(x));
     }
 
     public ExpenseDTO findById(Long id) {
