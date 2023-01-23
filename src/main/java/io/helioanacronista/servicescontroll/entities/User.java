@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,16 +25,16 @@ import java.util.Set;
 @Table(name = "tb_user")
 public class User implements UserDetails {
 
-    @ApiModelProperty(value = "ID de usuario")
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ApiModelProperty(value = "nome de usuario")
+    @NotNull(message = "Name cannot be null")
     private String name;
-    @ApiModelProperty(value = "email de usuario / login ")
+    @Email
     @Column(unique = true)
     private String email;
-    @ApiModelProperty(value = "senha de usuario")
+    @NotNull(message = "password cannot be null")
     private String password;
 
     @ApiModelProperty(value = "Lista de cargos")

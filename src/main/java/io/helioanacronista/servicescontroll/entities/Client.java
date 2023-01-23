@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Data
 @AllArgsConstructor
@@ -15,16 +17,15 @@ import javax.persistence.*;
 @Table(name = "tb_clients")
 public class Client {
 
-    @ApiModelProperty(value = "ID do Cliente")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ApiModelProperty(value = "Nome do cliente")
+    @NotNull(message = "Name cannot be null")
     private String name;
-    @ApiModelProperty(value = "Telefone do cliente")
+    @Min(value = 14, message = "Age should not be less than 14")
     private String phone;
-    @ApiModelProperty(value = "Endereço do cliente")
+    @NotNull(message = "address cannot be null")
     private String address;
 
 }

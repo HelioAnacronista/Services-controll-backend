@@ -3,6 +3,7 @@ package io.helioanacronista.servicescontroll.entities;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -16,6 +17,7 @@ public class Work {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotNull(message = "name cannot be null")
     private String name;
     private Integer status;
 
@@ -26,6 +28,6 @@ public class Work {
     @ManyToOne
     @JoinColumn(name = "id_client")
     private Client client;
-
+    @NotNull(message = "valor cannot be null")
     private Double valor;
 }
